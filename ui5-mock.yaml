@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: srnumscanprdorder
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertErrors: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - authenticationType: reentranceTicket
+            path: /sap
+            url: https://my414464.s4hana.cloud.sap
+            destination: S4HC_LEARN
+          - url: https://my414464-api.s4hana.cloud.sap
+            authenticationType: SAMLAssertion
+            destination: S4HC_LEARN
+            path: /sap/opu/odata/sap/ZUI_EWM_SCANNING_APP/
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        flp:
+          theme: sap_horizon
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/sap/ZUI_EWM_SCANNING_APP
+            metadataPath: ./webapp/localService/ZUI_EWM_SCANNING_APP/metadata.xml
+            mockdataPath: ./webapp/localService/ZUI_EWM_SCANNING_APP/data
+            generateMockData: true
+        annotations:
+          - localPath: ./webapp/localService/ZUI_EWM_SCANNING_APP/ZUI_EWM_SCANNING_APP_VAN.xml
+            urlPath: /sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZUI_EWM_SCANNING_APP_VAN',Version='0001')/$value/

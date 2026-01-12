@@ -1,0 +1,99 @@
+<mvc:View xmlns:table="sap.ui.table" xmlns:form="sap.ui.layout.form" 
+controllerName="srnumscanprdorder.controller.Consumption"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+    xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:ndc="sap.ndc">
+    <Page id="ConsumptionPage" title="Consumption View" showNavButton="true" 
+      navButtonPress="onNavBack">
+        <content>
+            <form:SimpleForm title="Header" editable="true" layout="ResponsiveGridLayout" 
+                labelSpanXL="4" labelSpanL="4" labelSpanM="2" labelSpanS="12"
+                emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0"> 
+                <form:content>
+                        <Label text="Finished Product" design="Bold" />
+                        <Text text="{ConsumptionModel>/Product}"></Text>
+                        <Input id="finishedProductInput" type="Text" placeholder="Enter or Scan" >
+                            <layoutData>
+                                <l:GridData span="XL2 L2 M2 S4" />
+                            </layoutData>
+                        </Input>
+                        <ndc:BarcodeScannerButton id="mfgOrdScanner" 
+                        scanSuccess="onScanSuccessConsumption"
+                                class="sampleBarcodeScannerButtonWithZebraEB" >
+                            <ndc:layoutData>
+                                <l:GridData span="XL1 L2 M2 S4" />
+                            </ndc:layoutData>
+                        </ndc:BarcodeScannerButton>
+                        <Label text="Description" design="Bold" class="sapUiTinyMarginEnd"/>
+                        <Text text="{ConsumptionModel>/ProductDescription}" />
+                    
+                        <Label text="Manufacturing Order" design="Bold"/>
+                        <Text text="{ConsumptionModel>/ManufacturingOrder}" /> 
+
+                        <Label text="Production Plant" design="Bold"/>
+                        <Text text="{ConsumptionModel>/ProductionPlant}" />
+                        
+                        <Label text="Storage Location" design="Bold"/>
+                        <Text text="{ConsumptionModel>/StorageLocation}" />
+                </form:content>
+            </form:SimpleForm>	
+            <Panel expanded="true" >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Item" level="H3"/>
+                        <ToolbarSpacer/>
+                        <ndc:BarcodeScannerButton
+                                    id="tableHeaderScanner"
+                                    scanSuccess="onTableScanSuccess"
+                                    class="sampleBarcodeScannerButtonWithZebraEB" />
+                    </Toolbar>
+                </headerToolbar>
+                <Table id="consumptionTable" items="{LineItemModel>/results}" 
+                mode="SingleSelectLeft">
+                <columns>
+                        <Column width="8%">
+                            <Text text="Sn No"/>
+                        </Column>
+                        <Column>
+                            <Text text="Component"/>
+                        </Column>
+                        <Column width="23%">
+                            <Text text="Component Description"/>
+                        </Column>
+                        <Column hAlign="Center">
+                            <Text text="Qty"/>
+                        </Column>
+                        <Column>
+                            <Text text="Scanned Value"/>
+                        </Column>
+                        <Column>
+                            <Text text="PSA"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active" press="onPressRow">
+                            <cells>
+                                <Text text="{LineItemModel>SerialNumber}"/>
+                                <Text text="{LineItemModel>ProductName}"/>
+                                <Text text="{LineItemModel>ProductDescription}"/>
+                                <Text text="{LineItemModel>ActualQuantityInBaseUnit}"/>
+                                <MultiInput id="idScanSerialNo" editable="true" showValueHelp="false" tokens="{LineItemModel>ScannedTokens}" >
+                                    <tokens>
+                                        <Token text="{LineItemModel>text}" />
+                                    </tokens>
+                                </MultiInput>
+                                <Text text="{LineItemModel>DestinationStorageBin}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>            
+            </Panel>
+        </content>
+        <footer>
+            <Bar >
+                <contentRight>
+                    <Button text="Save" type="Emphasized" press="onPressSave"></Button>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

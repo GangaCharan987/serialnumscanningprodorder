@@ -1,0 +1,42 @@
+<mvc:View xmlns:ndc="sap.ndc" xmlns:form="sap.ui.layout.form" controllerName="srnumscanprdorder.controller.HomeView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+    <Page id="page" title="{i18n>title}">
+        <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="2" labelSpanS="12"
+        emptySpanXL="4" emptySpanL="3" emptySpanM="4" emptySpanS="0">
+            <form:content>
+                <Label text="Warehouse Number" design="Bold"  />
+                <Input />
+                <Label text="Manufacturing Order" design="Bold" required="true"/>                
+                
+                    <Input
+                        id="manufacturingOrderInput"
+                        type="Text"
+                        placeholder="Enter or Scan"
+                    />
+                    
+                    <ndc:BarcodeScannerButton 
+                            id="sampleBarcodeScannerButton"
+                            scanSuccess="onScanSuccess"
+                            scanFail="onScanError"
+                            inputLiveUpdate="onScanLiveupdate"
+                            dialogTitle="Barcode Scanner Button Sample" >
+                        <ndc:layoutData>
+                            <l:GridData span="XL1 L2 M2 S4" />
+                        </ndc:layoutData>
+                    </ndc:BarcodeScannerButton>
+
+                <Label text="Production Supply Area" design="Bold" required="true"/>
+                <Input id="productionSupplyAreaInput" />
+            </form:content>
+        </form:SimpleForm>
+        <footer>
+            <Bar >
+                <contentRight>
+                    <Button text="Continue" type="Emphasized" press="onPressConsumption"/>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

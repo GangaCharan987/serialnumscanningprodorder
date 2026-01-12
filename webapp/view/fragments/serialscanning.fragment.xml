@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ndc="sap.ndc">
+    <Dialog title="Serial Scanning" >
+        <Table id="idScanPopupTable" items="{PopupModel>/results}" mode="SingleSelectLeft">
+            <headerToolbar>
+                    <Toolbar>
+                        <Title text="Item" level="H3"/>
+                        <ToolbarSpacer/>
+                        <ndc:BarcodeScannerButton
+                                    id="tableScanner"
+                                    scanSuccess="onPopUpScanSuccess"
+                                    class="sampleBarcodeScannerButtonWithZebraEB" />
+                    </Toolbar>
+                </headerToolbar>
+            <columns>
+                <Column >
+                    <Text text="Component" />
+                </Column>
+                <Column >
+                    <Text text="Component Description" />
+                </Column>
+                <Column>
+                    <Text text="Scanned Value" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem >
+                    <cells>
+                        <Text text="{PopupModel>ProductName}" />
+                        <Text text="{PopupModel>ProductDescription}"></Text>
+                        <Input value="{PopupModel>ScannedValue}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <buttons>
+            <Button text="Apply" type="Emphasized" press="onPressApply"/>
+            <Button text="Close" press="onPressClose"></Button>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,152 @@
+{
+  "_version": "1.73.1",
+  "sap.app": {
+    "id": "srnumscanprdorder",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.0",
+      "toolsId": "9deebad1-fa80-42d6-92c1-4a57a546f6c7"
+    },
+    "dataSources": {
+      "ZUI_EWM_SCANNING_APP_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZUI_EWM_SCANNING_APP_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/ZUI_EWM_SCANNING_APP/ZUI_EWM_SCANNING_APP_VAN.xml"
+        }
+      },
+      "ZUI_EWM_SCANNING_APP": {
+        "uri": "/sap/opu/odata/sap/ZUI_EWM_SCANNING_APP/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZUI_EWM_SCANNING_APP_VAN"
+          ],
+          "localUri": "localService/ZUI_EWM_SCANNING_APP/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "zso_srnumscanprdord-manage": {
+          "semanticObject": "zso_srnumscanprdord",
+          "action": "manage",
+          "title": "{{zso_srnumscanprdord-manage.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.136.8",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ndc": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "1": {
+        "dataSource": "ZUI_EWM_SCANNING_APP",
+        "preload": true,
+        "settings": {}
+      },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "srnumscanprdorder.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "srnumscanprdorder.view",
+        "async": true,
+        "viewPath": "srnumscanprdorder.view"
+      },
+      "routes": [
+        {
+          "name": "RouteHomeView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetHomeView"
+          ]
+        },
+        {
+          "name": "RouteConsumption",
+          "pattern": "Consumption/{orderNo}/{PSA}",
+          "target": [
+            "TargetConsumption"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetHomeView": {
+          "id": "HomeView",
+          "name": "HomeView"
+        },
+        "TargetConsumption": {
+          "id": "Consumption",
+          "name": "Consumption"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "srnumscanprdorder.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "srnumscanprdorder"
+  }
+}
